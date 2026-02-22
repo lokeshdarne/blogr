@@ -14,8 +14,14 @@ function createPrismaClient() {
     return new PrismaClient({ adapter })
 }
 
-export const prisma = globalForPrisma.prisma ?? createPrismaClient()
-
-if (process.env.NODE_ENV !== 'production') globalForPrisma.prisma = prisma
+// Lazy-initialize Prisma client to avoid build-time errors
+// This ensures the client is only created when actually used at runtime
+export const prisma = new Proxy({} as PrismaClient, {
+    get(target, prop) {
+        const client = globalForPrisma.prisma ?? createPrismaClient()
+        if (process.env.NODE_ENV !== 'production') globalForPrisma.prisma = client
+        return Reflect.get(client, prop, client)
+    }
+})
 
 export default prisma
