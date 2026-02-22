@@ -27,7 +27,7 @@ const springTransition = {
     stiffness: 300,
     damping: 30,
     mass: 0.8,
-};
+} as const;
 
 interface PageTransitionProps {
     children: ReactNode;
@@ -79,7 +79,7 @@ export const staggerItem = {
             type: "spring",
             stiffness: 300,
             damping: 30,
-        },
+        } as const,
     },
 };
 
