@@ -40,8 +40,8 @@ export default function Navbar() {
                             key={item.href}
                             href={item.href}
                             className={`relative flex items-center gap-2 px-3 py-2 rounded-full transition-colors ${isActive
-                                    ? "text-[#fafafa]"
-                                    : "text-[#64748b] hover:text-[#fafafa] hover:bg-white/[0.05]"
+                                ? "text-[#fafafa]"
+                                : "text-[#64748b] hover:text-[#fafafa] hover:bg-white/[0.05]"
                                 }`}
                         >
                             <Icon size={16} strokeWidth={1.5} />
@@ -50,7 +50,7 @@ export default function Navbar() {
                                 <motion.div
                                     layoutId="activeNav"
                                     className="absolute inset-0 rounded-full bg-white/[0.1] -z-10"
-                                    transition={{ type: "spring", stiffness: 400, damping: 30 }}
+                                    transition={{ type: "spring" as const, stiffness: 400, damping: 30 }}
                                 />
                             )}
                         </Link>
