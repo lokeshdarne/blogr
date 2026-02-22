@@ -1,6 +1,6 @@
 "use client";
 
-import { motion, AnimatePresence, type Transition } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { usePathname } from "next/navigation";
 import { ReactNode } from "react";
 
@@ -44,7 +44,7 @@ export default function PageTransition({ children }: PageTransitionProps) {
                 initial="hidden"
                 animate="enter"
                 exit="exit"
-                transition={springTransition}
+                transition={{ type: "spring" as const, stiffness: 300, damping: 30, mass: 0.8 }}
             >
                 {children}
             </motion.div>
