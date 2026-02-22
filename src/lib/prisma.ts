@@ -1,5 +1,4 @@
 import { PrismaClient } from '@prisma/client'
-import { PrismaPg } from '@prisma/adapter-pg'
 
 const globalForPrisma = globalThis as unknown as {
     prisma: PrismaClient | undefined
@@ -10,8 +9,12 @@ function createPrismaClient() {
     if (!connectionString) {
         throw new Error('DATABASE_URL environment variable is not set')
     }
-    const adapter = new PrismaPg({ connectionString })
-    return new PrismaClient({ adapter })
+
+    // For Supabase, use standard PrismaClient without adapter
+    // The adapter-pg can cause issues in serverless environments
+    return new PrismaClient({
+        datasourceUrl: connectionString,
+    })
 }
 
 // Lazy-initialize Prisma client to avoid build-time errors
