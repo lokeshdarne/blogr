@@ -7,16 +7,11 @@ import CommentSection from "@/components/CommentSection";
 import { Calendar, ArrowLeft } from "lucide-react";
 import Link from "next/link";
 
+// Force dynamic rendering to avoid build-time database queries
+export const dynamic = 'force-dynamic';
+
 interface PageProps {
     params: Promise<{ slug: string }>;
-}
-
-export async function generateStaticParams() {
-    const posts = await prisma.post.findMany({
-        where: { status: "published" },
-        select: { slug: true },
-    });
-    return posts.map((p: { slug: string }) => ({ slug: p.slug }));
 }
 
 export default async function BlogPostPage({ params }: PageProps) {
