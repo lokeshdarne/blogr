@@ -3,7 +3,8 @@ import BlogCard from "@/components/BlogCard";
 import { StaggerList, StaggerItem } from "@/components/PageTransition";
 import { FileText } from "lucide-react";
 
-export const revalidate = 60;
+// Force dynamic rendering to avoid build-time database queries
+export const dynamic = 'force-dynamic';
 
 export default async function HomePage() {
   const posts = await prisma.post.findMany({

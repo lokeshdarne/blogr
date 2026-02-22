@@ -13,6 +13,9 @@ import {
     FileText,
 } from "lucide-react";
 
+// Force dynamic rendering to avoid build-time database queries
+export const dynamic = 'force-dynamic';
+
 function formatDate(date: Date) {
     return new Intl.DateTimeFormat("en-US", {
         month: "short",
@@ -106,8 +109,8 @@ export default async function AdminDashboardPage() {
                                     <div className="flex items-center gap-2 mb-1">
                                         <span
                                             className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs border ${post.status === "published"
-                                                    ? "bg-green-500/10 border-green-500/20 text-green-400"
-                                                    : "bg-white/[0.03] border-white/[0.06] text-[#64748b]"
+                                                ? "bg-green-500/10 border-green-500/20 text-green-400"
+                                                : "bg-white/[0.03] border-white/[0.06] text-[#64748b]"
                                                 }`}
                                         >
                                             {post.status === "published" ? (
@@ -155,8 +158,8 @@ export default async function AdminDashboardPage() {
                                                     : "Publish"
                                             }
                                             className={`p-2 rounded-lg border transition-colors ${post.status === "published"
-                                                    ? "border-green-500/20 text-green-400/60 hover:border-green-500/40 hover:text-green-400"
-                                                    : "border-white/[0.06] text-[#64748b] hover:border-white/[0.12] hover:text-[#fafafa]"
+                                                ? "border-green-500/20 text-green-400/60 hover:border-green-500/40 hover:text-green-400"
+                                                : "border-white/[0.06] text-[#64748b] hover:border-white/[0.12] hover:text-[#fafafa]"
                                                 }`}
                                         >
                                             {post.status === "published" ? (
