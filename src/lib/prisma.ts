@@ -1,8 +1,10 @@
 import { PrismaClient } from '@prisma/client'
 import { PrismaPg } from '@prisma/adapter-pg'
+import { Pool } from 'pg'
 
 const globalForPrisma = globalThis as unknown as {
     prisma: PrismaClient | undefined
+    pool: Pool | undefined
 }
 
 function createPrismaClient() {
@@ -10,7 +12,12 @@ function createPrismaClient() {
     if (!connectionString) {
         throw new Error('DATABASE_URL environment variable is not set')
     }
-    const adapter = new PrismaPg({ connectionString })
+
+    // Use a connection pool for better serverless compatibility with Supabase
+    const pool = globalForPrisma.pool ?? new Pool({ connectionString })
+    if (process.env.NODE_ENV !== 'production') globalForPrisma.pool = pool
+
+    const adapter = new PrismaPg(pool)
     return new PrismaClient({ adapter })
 }
 
