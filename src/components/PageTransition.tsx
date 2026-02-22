@@ -26,6 +26,7 @@ interface PageTransitionProps {
     children: ReactNode;
 }
 
+// Page transition component with smooth animations
 export default function PageTransition({ children }: PageTransitionProps) {
     const pathname = usePathname();
 
